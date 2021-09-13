@@ -14,7 +14,7 @@ export default function OrderForm(props) {
     setOrderItem(event.target.value);
   };
 
-  const menuQuantityChosen = (event) => setQuantity(event.value);
+  const menuQuantityChosen = (event) => setQuantity(event.target.value);
 
   const auth = useSelector((state) => state.auth);
 
