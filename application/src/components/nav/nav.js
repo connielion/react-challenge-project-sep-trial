@@ -1,8 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { logoutUser } from '../../redux/actions/authActions';
 import "./nav.css";
 
-const Nav = (props) => {
+
+const Nav = () => {
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+
+    const logOutOnClick = () => {
+        dispatch(logoutUser());
+        history.push('/');
+    }
+    
     return (
         <div className="nav-strip">
             <Link to={"/order"} className="nav-link">
@@ -15,11 +27,11 @@ const Nav = (props) => {
                     <label className="nav-label">View Orders</label>
                 </div>
             </Link>
-            <Link to={"/login"} className="nav-link">
+            <div onClick={logOutOnClick} className="nav-link">
                 <div className="nav-link-style">
                     <label className="nav-label">Log Out</label>
                 </div>
-            </Link>
+            </div>
         </div>
     );
 }
