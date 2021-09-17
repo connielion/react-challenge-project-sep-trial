@@ -1,12 +1,9 @@
 import React from "react";
-import { useDispatch, connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logoutUser } from '../../redux/actions/authActions';
 import "./nav.css";
 
-const mapStateToProps = state => ({
-    email: state.auth.email
-})
 
 const Nav = () => {
     const dispatch = useDispatch();
@@ -17,6 +14,7 @@ const Nav = () => {
         dispatch(logoutUser());
         history.push('/');
     }
+    
     return (
         <div className="nav-strip">
             <Link to={"/order"} className="nav-link">
@@ -38,4 +36,4 @@ const Nav = () => {
     );
 }
 
-export default connect(mapStateToProps)(Nav);
+export default Nav;
