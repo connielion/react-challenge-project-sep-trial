@@ -13,7 +13,7 @@ export default function OrderForm(props) {
     const menuItemChosen = (event) => setOrderItem(event.target.value);
     const menuQuantityChosen = (event) => setQuantity(event.target.value);
 
-    const auth = useSelector((state) => state.auth);
+    const email = useSelector((state) => state.auth.email);
 
     const submitOrder = () => {
         if (orderItem === "") return;
@@ -22,7 +22,7 @@ export default function OrderForm(props) {
             body: JSON.stringify({
                 order_item: orderItem,
                 quantity,
-                ordered_by: auth.email || 'Unknown!',
+                ordered_by: email || 'Unknown!',
             }),
             headers: {
                 'Content-Type': 'application/json'

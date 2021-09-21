@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { logoutUser } from '../../redux/actions/authActions';
+import { logout } from '../../redux-toolkit/authSlice';
 import "./nav.css";
 
 
@@ -11,7 +11,7 @@ const Nav = () => {
 
 
     const logOutOnClick = () => {
-        dispatch(logoutUser());
+        dispatch(logout());
         history.push('/');
     }
     
