@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 const AppRouter = () => {
   const token = useSelector(state => state.auth.token);
-
+  
   return (
     <Router>
       <GuardProvider guards={guardsList}>

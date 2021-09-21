@@ -12,12 +12,20 @@ const LoginForm = () => {
 
   const loginOnClick = (e) => {
     e.preventDefault();
-    dispatch(login({ email, password })).then(()=>history.push('/view-orders'));
+    dispatch(login({ email, password })).then(() =>
+      history.push("/view-orders")
+    );
   };
 
   const onChange = (key, val) => {
     if (key === "email") setEmail(val);
     if (key === "password") setPassword(val);
+  };
+
+  const validateEmail = (email) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   };
 
   return (
@@ -45,7 +53,13 @@ const LoginForm = () => {
       </div>
       <div className="d-flex justify-content-center">
         <button
-          onClick={(e) => loginOnClick(e)}
+          onClick={(e) =>
+            email.length >= 6 && validateEmail(email) && password.length >= 6
+              ? loginOnClick(e)
+              : alert(
+                  "Please enter valid email and password with at least 6 characters!"
+                )
+          }
           type="submit"
           className="btn btn-primary"
         >
