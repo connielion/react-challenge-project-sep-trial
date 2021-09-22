@@ -1,12 +1,32 @@
 import React from 'react';
+import { SERVER_IP } from '../../private';
+
+const DELETE_ORDER_URL = `${SERVER_IP}/api/delete-order`;
 
 const OrdersList = (props) => {
-    const { orders } = props;
+    const { orders, setOrders } = props;
     if (!props || !props.orders || !props.orders.length) return (
         <div className="empty-orders">
             <h2>There are no orders to display</h2>
         </div>
     );
+
+    const deleteOrderById = async orderId => {
+        await fetch(DELETE_ORDER_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                id: orderId,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((response) => response.json());
+    }
+
+    const updateOrdersAfterRemoval = orderId => {
+        const updatedOrders = orders.filter(order=> order._id !== orderId);
+        setOrders(updatedOrders);
+    }
 
     return orders.map(order => {
         const createdDate = new Date(order.createdAt);
@@ -21,8 +41,11 @@ const OrdersList = (props) => {
                     <p>Quantity: {order.quantity}</p>
                 </div>
                 <div className="col-md-4 view-order-right-col">
-                    <button className="btn btn-success">Edit</button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button className="btn btn-success" >Edit</button>
+                    <button className="btn btn-danger" onClick={()=>{
+                        deleteOrderById(order._id);
+                        updateOrdersAfterRemoval(order._id);
+                    }}>Delete</button>
                 </div>
             </div>
         );
